@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Already? Not yet! | Yo Yo English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#5B3DF5; --bg2:#4A2EE0; --card:#fff; --ink:#1B1340; --mute:#6B6590;
+  --green:#22C55E; --green-d:#15803D; --red:#F43F5E; --red-d:#BE123C;
+  --yellow:#FFC93C; --yellow-d:#D99A00; --pink:#FF6FB1; --pink-d:#D63F86;
+  --sky:#38BDF8; --sky-d:#0284C7; --orange:#FF8A3D; --orange-d:#D9621A;
+  --font:"Rubik","Trebuchet MS",system-ui,-apple-system,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:var(--font);color:var(--ink);font-size:18px;line-height:1.4;
+  background:var(--bg) radial-gradient(circle,rgba(255,255,255,.13) 2px,transparent 2.5px) 0 0/28px 28px;
+  -webkit-tap-highlight-color:transparent;
+}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:4px solid var(--yellow);outline-offset:3px}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding:18px 16px 40px}
+
+/* chunky buttons */
+.chunky{--c:var(--card);--d:#D6D1F0;background:var(--c);border-radius:18px;box-shadow:0 6px 0 var(--d);transition:transform .08s,box-shadow .08s;font-weight:700}
+.chunky:active{transform:translateY(4px);box-shadow:0 2px 0 var(--d)}
+.go{--c:var(--green);--d:var(--green-d);color:#fff;padding:14px 26px;font-size:20px}
+.alt{--c:#fff;--d:#D6D1F0;padding:14px 22px;font-size:18px}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:6px}
+.xp{background:rgba(0,0,0,.22);border-radius:999px;padding:6px 14px;font-weight:700;font-size:16px}
+.snd{background:rgba(0,0,0,.22);border-radius:999px;width:40px;height:40px;font-size:18px}
+
+/* home */
+.title{color:#fff;font-weight:900;font-size:clamp(40px,11vw,68px);line-height:.95;margin:18px 0 6px;letter-spacing:-.02em;transform:rotate(-2deg)}
+.title span{display:inline-block;background:var(--yellow);color:var(--ink);padding:0 .15em;border-radius:.15em;box-shadow:0 .08em 0 var(--yellow-d)}
+.lead{color:#E3DDFF;margin:14px 0 22px}
+.group{color:#fff;font-weight:700;font-size:20px;margin:22px 0 10px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tileg{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:16px;gap:6px;min-height:130px;color:#fff}
+.tileg .em{font-size:34px;line-height:1}
+.tileg b{font-size:19px}
+.tileg small{font-size:14px;font-weight:500;opacity:.92}
+.t-y{--c:var(--yellow);--d:var(--yellow-d);color:var(--ink)!important}
+.t-p{--c:var(--pink);--d:var(--pink-d)}
+.t-s{--c:var(--sky);--d:var(--sky-d)}
+.t-o{--c:var(--orange);--d:var(--orange-d)}
+.t-g{--c:var(--green);--d:var(--green-d)}
+.t-w{--c:#fff;--d:#D6D1F0;color:var(--ink)!important}
+.star-row{font-size:14px;letter-spacing:2px}
+
+/* game bar */
+.gbar{display:flex;align-items:center;gap:12px;margin:6px 0 16px}
+.x{color:#fff;font-size:26px;width:40px;height:40px;border-radius:12px;background:rgba(0,0,0,.2)}
+.prog{flex:1;height:18px;border-radius:99px;background:rgba(0,0,0,.25);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--yellow);border-radius:99px;transition:width .35s}
+.streak{color:#fff;font-weight:900;min-width:58px;text-align:right;font-size:20px}
+.streak.hot{color:var(--yellow)}
+.clock{color:#fff;font-weight:900;font-size:22px;min-width:52px;text-align:right}
+
+.qcard{background:var(--card);border-radius:26px;padding:26px 20px;box-shadow:0 8px 0 rgba(0,0,0,.18);text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.ask{font-size:15px;color:var(--mute);font-weight:500}
+.q{font-size:clamp(22px,5.6vw,30px);font-weight:700;line-height:1.3}
+.q .gap{display:inline-block;min-width:80px;border-bottom:4px solid var(--bg);margin:0 4px}
+.q .verb{color:var(--bg);font-weight:900}
+.task{display:inline-flex;align-items:center;gap:12px;background:#F3F0FF;border-radius:16px;padding:10px 18px;font-size:20px;font-weight:700;margin:0 auto}
+.tb{width:34px;height:34px;border-radius:9px;border:3px solid var(--ink);display:grid;place-items:center;font-size:22px;font-weight:900}
+.tb.on{background:var(--green);border-color:var(--green-d);color:#fff}
+.tb.off{background:#fff;color:var(--red)}
+.opts{display:grid;gap:12px;margin-top:18px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{padding:18px 8px;font-size:22px}
+.opt.right{--c:var(--green);--d:var(--green-d);color:#fff}
+.opt.wrong{--c:var(--red);--d:var(--red-d);color:#fff;animation:shake .35s}
+.opt:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.pop{animation:pop .3s}
+@keyframes pop{50%{transform:scale(1.06)}}
+
+.sheet{visibility:hidden;z-index:5;position:fixed;left:0;right:0;bottom:0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));transform:translateY(110%);transition:transform .22s}
+.sheet.show{transform:none;visibility:visible}
+.sheet.ok{background:#DCFCE7}.sheet.no{background:#FFE4E6}
+.sheet .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sheet .msg{flex:1;min-width:200px}
+.sheet .head{font-weight:900;font-size:22px}
+.sheet.ok .head{color:var(--green-d)}.sheet.no .head{color:var(--red-d)}
+.sheet .full{font-size:18px;font-weight:500}
+.sheet .full b{background:var(--yellow);padding:0 4px;border-radius:5px}
+.sheet .tip{font-size:15px;color:var(--mute);margin-top:2px}
+.sheet.no .go{--c:var(--red);--d:var(--red-d)}
+.play{width:46px;height:46px;border-radius:50%;background:var(--yellow);box-shadow:0 4px 0 var(--yellow-d);display:inline-grid;place-items:center;flex:none;font-size:18px}
+.play:active{transform:translateY(3px);box-shadow:0 1px 0 var(--yellow-d)}
+.help{color:#fff;background:rgba(0,0,0,.2);border-radius:12px;height:40px;padding:0 12px;font-weight:700}
+.rulebox{background:#fff;border-radius:18px;padding:14px 16px;margin-bottom:14px;font-size:16px}
+.rulebox p{margin:4px 0}
+
+/* cards */
+.flash{background:var(--card);border-radius:26px;min-height:300px;box-shadow:0 8px 0 rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;cursor:pointer;text-align:center}
+.flash .big{font-size:clamp(46px,13vw,72px);font-weight:900;line-height:1}
+.flash .ru{color:var(--mute);font-size:18px}
+.forms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.forms div{display:flex;flex-direction:column;align-items:center;gap:8px}
+.forms small{color:var(--mute);font-weight:700}
+.forms b{font-size:clamp(20px,5.5vw,30px)}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.navrow .chunky{flex:1}
+.flip-hint{color:var(--mute);font-size:14px}
+
+/* memory */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mc{aspect-ratio:1/1;border-radius:16px;font-weight:700;font-size:clamp(14px,3.6vw,18px);padding:6px;display:grid;place-items:center;text-align:center;line-height:1.2}
+.mc.back{--c:var(--sky);--d:var(--sky-d);color:transparent}
+.mc.back::after{content:"?";color:#fff;font-size:30px;font-weight:900}
+.mc.face{--c:#fff;--d:#D6D1F0}
+.mc.face.base{color:var(--bg);font-size:clamp(18px,4.8vw,24px)}
+.mc.done{--c:var(--green);--d:var(--green-d);color:#fff!important}
+.mc.miss{--c:var(--red);--d:var(--red-d);color:#fff!important}
+.meminfo{color:#fff;display:flex;justify-content:space-between;margin-bottom:12px;font-weight:700}
+
+/* end */
+.end{background:#fff;border-radius:28px;padding:30px 20px;text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.18)}
+.stars{font-size:58px;letter-spacing:6px}
+.stars .off{filter:grayscale(1);opacity:.25}
+.end h2{font-size:30px;font-weight:900;margin:8px 0}
+.end .stat{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:14px 0 22px}
+.end .stat span{background:#F3F0FF;border-radius:14px;padding:8px 14px;font-weight:700}
+.end .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9}
+.confetti i{position:absolute;top:-20px;width:10px;height:16px;border-radius:3px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+@media (max-width:480px){
+  .tiles{gap:10px}.tileg{min-height:120px;padding:14px}
+  .opts.three{grid-template-columns:1fr}
+  .mem{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="xp" id="xp">⭐ 0 XP</span>
+    <button class="snd" id="snd" aria-label="Sound on/off">🔊</button>
+  </div>
+
+  <!-- HOME -->
+  <main id="home">
+    <h1 class="title"><span>Already?</span><br>Not yet!</h1>
+    <p class="lead">Pick a game. Win stars. Beat your score!</p>
+
+    <h2 class="group">Present Perfect</h2>
+    <div class="tiles">
+      <button class="chunky tileg t-y" data-game="ay"><span class="em">🤔</span><b>Already or yet?</b><small>30 sentences</small><span class="star-row" id="st-ay"></span></button>
+      <button class="chunky tileg t-p" data-game="tf"><span class="em">✅</span><b>Mia's list</b><small>True or false?</small><span class="star-row" id="st-tf"></span></button>
+      <button class="chunky tileg t-s" data-game="v3"><span class="em">🧩</span><b>Fill the verb</b><small>Choose the V3</small><span class="star-row" id="st-v3"></span></button>
+    </div>
+
+    <h2 class="group">Irregular verbs</h2>
+    <div class="tiles">
+      <button class="chunky tileg t-w" data-game="cards"><span class="em">🔊</span><b>Cards</b><small>Listen and learn</small></button>
+      <button class="chunky tileg t-o" data-game="mem"><span class="em">🧠</span><b>Memory</b><small>Find the pairs</small><span class="star-row" id="st-mem"></span></button>
+      <button class="chunky tileg t-g" data-game="fm"><span class="em">🎯</span><b>Forms quiz</b><small>V2 or V3?</small><span class="star-row" id="st-fm"></span></button>
+      <button class="chunky tileg t-p" data-game="bz"><span class="em">⚡</span><b>60-second blitz</b><small>Be fast!</small><span class="star-row" id="st-bz"></span></button>
+    </div>
+  </main>
+
+  <!-- QUIZ -->
+  <section id="quiz" hidden>
+    <div class="gbar">
+      <button class="x" data-home aria-label="Back to menu">✕</button>
+      <div class="prog"><i id="qprog"></i></div>
+      <button class="help" id="qhelp" hidden>Rule</button>
+      <span class="streak" id="qstreak">🔥 0</span>
+      <span class="clock" id="qclock" hidden>60</span>
+    </div>
+    <div class="rulebox" id="rulebox" hidden>
+      <p><b>already</b> (уже) — positive: I've <b>already</b> done it.</p>
+      <p><b>yet</b> — negatives and questions, at the end: I haven't done it <b>yet</b>. Have you done it <b>yet</b>?</p>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="opts" id="qopts"></div>
+  </section>
+
+  <!-- CARDS -->
+  <section id="cards" hidden>
+    <div class="gbar">
+      <button class="x" data-home aria-label="Back to menu">✕</button>
+      <div class="prog"><i id="cprog"></i></div>
+      <span class="streak" id="ccount" style="font-size:16px"></span>
+    </div>
+    <div class="flash" id="flash" role="button" tabindex="0" aria-label="Flip the card"></div>
+    <div class="navrow">
+      <button class="chunky alt" id="cprev">Back</button>
+      <button class="chunky alt" id="cshuf">Shuffle</button>
+      <button class="chunky go" id="cnext">Next</button>
+    </div>
+  </section>
+
+  <!-- MEMORY -->
+  <section id="memory" hidden>
+    <div class="gbar">
+      <button class="x" data-home aria-label="Back to menu">✕</button>
+      <div class="prog"><i id="mprog"></i></div>
+      <span class="streak" id="mmoves" style="font-size:16px"></span>
+    </div>
+    <div class="meminfo"><span>Match the verb with its forms</span></div>
+    <div class="mem" id="mem"></div>
+  </section>
+
+  <!-- END -->
+  <section id="end" hidden>
+    <div class="end">
+      <div class="stars" id="estars"></div>
+      <h2 id="etitle"></h2>
+      <div class="stat" id="estat"></div>
+      <div class="row">
+        <button class="chunky alt" data-home>Menu</button>
+        <button class="chunky go" id="eagain">Play again</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet" aria-live="polite"><div class="in">
+  <button class="play" id="splay" aria-label="Listen">▶</button>
+  <div class="msg"><div class="head" id="shead"></div><div class="full" id="sfull"></div><div class="tip" id="stip"></div></div>
+  <button class="chunky go" id="snext">Continue</button>
+</div></div>
+<div class="confetti" id="confetti"></div>
+
+<script>
+/* ===== DATA ===== */
+// 20 most frequent irregular verbs
+const VERBS=[
+ {b:"be",v2:["was","were"],v3:["been"],ru:"быть"},
+ {b:"have",v2:["had"],v3:["had"],ru:"иметь"},
+ {b:"say",v2:["said"],v3:["said"],ru:"сказать"},
+ {b:"do",v2:["did"],v3:["done"],ru:"делать"},
+ {b:"know",v2:["knew"],v3:["known"],ru:"знать"},
+ {b:"get",v2:["got"],v3:["got","gotten"],ru:"получать"},
+ {b:"come",v2:["came"],v3:["come"],ru:"приходить"},
+ {b:"go",v2:["went"],v3:["gone"],ru:"идти, ехать"},
+ {b:"see",v2:["saw"],v3:["seen"],ru:"видеть"},
+ {b:"take",v2:["took"],v3:["taken"],ru:"брать"},
+ {b:"think",v2:["thought"],v3:["thought"],ru:"думать"},
+ {b:"make",v2:["made"],v3:["made"],ru:"делать, создавать"},
+ {b:"tell",v2:["told"],v3:["told"],ru:"рассказывать"},
+ {b:"put",v2:["put"],v3:["put"],ru:"класть"},
+ {b:"find",v2:["found"],v3:["found"],ru:"находить"},
+ {b:"read",v2:["read"],v3:["read"],ru:"читать"},
+ {b:"give",v2:["gave"],v3:["given"],ru:"давать"},
+ {b:"feel",v2:["felt"],v3:["felt"],ru:"чувствовать"},
+ {b:"hear",v2:["heard"],v3:["heard"],ru:"слышать"},
+ {b:"leave",v2:["left"],v3:["left"],ru:"уходить, оставлять"}
+];
+// [word] marks where already/yet goes
+const AY=[
+ "I haven't seen that film [yet].","We've [already] had lunch.","Has Tom done his homework [yet]?",
+ "She has [already] read this book twice.","They haven't come home [yet].","I've [already] told you the answer!",
+ "Have you found your keys [yet]?","The bus has [already] left.","Has your brother given you the money [yet]?",
+ "Don't worry, I've [already] made dinner.","We haven't heard the news [yet].","Somebody has [already] taken the last slice of pizza!",
+ "Has Mia gone to bed [yet]?","My cousin has [already] got a new phone.","Have you said sorry to your sister [yet]?",
+ "I haven't thought about it [yet].","Dad has [already] put the cake in the oven.","Have you heard the new song [yet]?",
+ "You've [already] seen this video three times!","He hasn't left the house [yet].","I've [already] done level 10 in this game.",
+ "Have they told you about the party [yet]?","Our team has [already] got 20 points.","Has Leo found his phone [yet]?",
+ "I haven't given Mum her present [yet].","We've [already] been to this museum.","Have you taken the dog out [yet]?",
+ "My friends have [already] gone home.","The pizza hasn't come [yet].","Wow, you've [already] finished!"
+];
+const LIST=[
+ {v:"packed",t:"pack her bag"},{v:"bought",t:"buy snacks"},{v:"charged",t:"charge her phone"},
+ {v:"found",t:"find her headphones"},{v:"written",t:"write a note to Mum"},{v:"fed",t:"feed the cat"},
+ {v:"made",t:"make sandwiches"},{v:"told",t:"tell her friends"},{v:"done",t:"do her homework"},
+ {v:"sent",t:"send the trip form"},{v:"cleaned",t:"clean her trainers"},{v:"taken",t:"take her jacket"}
+];
+const V3S=[
+ {s:"Have you ever ___ to London?",b:"be",o:["been","was","beed"]},
+ {s:"We've ___ a great day!",b:"have",o:["had","have","haved"]},
+ {s:"She hasn't ___ a word all day.",b:"say",o:["said","say","sayed"]},
+ {s:"Have you ___ your homework yet?",b:"do",o:["done","did","doed"]},
+ {s:"I've ___ him since we were five.",b:"know",o:["known","knew","knowed"]},
+ {s:"I've just ___ a message from Kate.",b:"get",o:["got","get","getted"]},
+ {s:"Look! The bus has ___.",b:"come",o:["come","came","comed"]},
+ {s:"Where's Sam? He has ___ to the shop.",b:"go",o:["gone","went","goed"]},
+ {s:"I've never ___ real snow.",b:"see",o:["seen","saw","seed"]},
+ {s:"Who has ___ my pen?",b:"take",o:["taken","took","taked"]},
+ {s:"Have you ___ about my idea?",b:"think",o:["thought","think","thinked"]},
+ {s:"Mum has ___ pancakes!",b:"make",o:["made","make","maked"]},
+ {s:"Has she ___ you the news?",b:"tell",o:["told","tell","telled"]},
+ {s:"Where have you ___ my phone?",b:"put",o:["put","putted","puts"]},
+ {s:"I've ___ my lost sock!",b:"find",o:["found","find","finded"]},
+ {s:"I've ___ this comic three times.",b:"read",o:["read","readed","reading"]},
+ {s:"My dad has ___ me a new bike.",b:"give",o:["given","gave","gived"]},
+ {s:"I've never ___ so happy!",b:"feel",o:["felt","feel","feeled"]},
+ {s:"Have you ___ the new song?",b:"hear",o:["heard","hear","heared"]},
+ {s:"The train has already ___.",b:"leave",o:["left","leaved","leave"]},
+ {s:"Have you ever ___ a famous person?",b:"see",o:["seen","saw","seed"]},
+ {s:"They've already ___ home.",b:"go",o:["gone","went","goed"]},
+ {s:"I haven't ___ my room yet.",b:"do",o:["done","did","doed"]},
+ {s:"Has anybody ___ my keys?",b:"find",o:["found","find","finded"]}
+];
+
+/* ===== HELPERS ===== */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const G={xp:0,sound:true,best:{}};
+
+/* speech: every card and answer can be heard */
+let voice=null;
+function pickVoice(){try{const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function speak(t){if(!("speechSynthesis" in window)||!t)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";if(voice)u.voice=voice;u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+const sayF=(v,f)=>f==="b"?v.b:(v.b==="read"?"red":v[f].join(", "));   // read (past) = /red/
+const sayAll=v=>`${v.b}, ${sayF(v,"v2")}, ${sayF(v,"v3")}`;
+const speakText=t=>t.replace(/\bread\b(?= (this|it|that))/g,"red"); // "has read this" -> /red/
+
+/* game sounds */
+let ac=null;
+function beep(ok){
+  if(!G.sound)return;
+  try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    const notes=ok?[660,990]:[220,160];
+    notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type=ok?"triangle":"square";o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(ac.destination);const t=ac.currentTime+i*.09;o.start(t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.stop(t+.17)});
+  }catch(e){}
+}
+$("#snd").onclick=()=>{G.sound=!G.sound;$("#snd").textContent=G.sound?"🔊":"🔇"};
+function addXP(n){G.xp+=n;$("#xp").textContent=`⭐ ${G.xp} XP`}
+
+/* screens */
+function show(id){["home","quiz","cards","memory","end"].forEach(s=>$("#"+s).hidden=s!==id);hideSheet();if(id!=="end")$("#confetti").innerHTML="";window.scrollTo(0,0)}
+document.addEventListener("click",e=>{if(e.target.closest("[data-home]")){stopTimer();show("home")}});
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const c=$("#confetti"),cols=["#FFC93C","#FF6FB1","#38BDF8","#22C55E","#FF8A3D","#fff"];
+  c.innerHTML=Array.from({length:60},()=>`<i style="left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*6)]};animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.4}s"></i>`).join("");
+  setTimeout(()=>c.innerHTML="",3600);
+}
+function endScreen(key,stars,title,stats,again){
+  show("end");
+  $("#estars").innerHTML=[1,2,3].map(n=>`<span class="${n<=stars?"":"off"}">⭐</span>`).join("");
+  $("#etitle").textContent=title;
+  $("#estat").innerHTML=stats.map(s=>`<span>${s}</span>`).join("");
+  $("#eagain").onclick=again;
+  G.best[key]=Math.max(G.best[key]||0,stars);
+  const el=$("#st-"+key);if(el)el.textContent="⭐".repeat(G.best[key]);
+  if(stars>=2)confetti();beep(true);
+}
+
+/* feedback sheet */
+function showSheet(ok,full,tip,say,next){
+  const s=$("#sheet");s.className="sheet show "+(ok?"ok":"no");
+  $("#shead").textContent=ok?["Great!","Correct!","Nice one!","Yes!"][Math.floor(Math.random()*4)]:"Oops!";
+  $("#sfull").innerHTML=full;$("#stip").innerHTML=tip||"";
+  $("#splay").onclick=()=>speak(say);$("#snext").onclick=next;
+  $("#snext").focus({preventScroll:true});
+}
+function hideSheet(){$("#sheet").className="sheet"}
+
+/* ===== QUIZ ENGINE ===== */
+let Q=null,timer=null;
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+function startQuiz(cfg){
+  stopTimer();
+  Q={cfg,queue:cfg.items?shuffle(cfg.items):null,i:0,right:0,wrong:0,streak:0,best:0,retried:new Set(),lock:false,score:0,t:cfg.timed||0};
+  show("quiz");
+  $("#qhelp").hidden=!cfg.rule;$("#rulebox").hidden=true;
+  $("#qclock").hidden=!cfg.timed;$("#qstreak").textContent="🔥 0";$("#qstreak").classList.remove("hot");
+  $("#qopts").className="opts "+(cfg.cols||"two");
+  if(cfg.timed){
+    $("#qclock").textContent=Q.t;$("#qprog").style.width="100%";
+    timer=setInterval(()=>{Q.t--;$("#qclock").textContent=Q.t;$("#qprog").style.width=(Q.t/cfg.timed*100)+"%";if(Q.t<=0){stopTimer();finishQuiz()}},1000);
+  }
+  renderQ();
+}
+$("#qhelp").onclick=()=>{$("#rulebox").hidden=!$("#rulebox").hidden};
+function renderQ(){
+  const cfg=Q.cfg;
+  Q.item=cfg.timed?cfg.gen():Q.queue[Q.i];
+  Q.cur=cfg.make(Q.item);Q.lock=false;
+  if(!cfg.timed)$("#qprog").style.width=(Q.i/Q.queue.length*100)+"%";
+  const card=$("#qcard");card.innerHTML=Q.cur.html;card.classList.remove("pop");void card.offsetWidth;card.classList.add("pop");
+  const opts=cfg.keepOrder?Q.cur.opts:shuffle(Q.cur.opts);
+  $("#qopts").innerHTML=opts.map(o=>`<button class="chunky opt" data-o="${esc(o)}">${esc(o)}</button>`).join("");
+}
+$("#qopts").onclick=e=>{
+  const b=e.target.closest(".opt");if(!b||Q.lock)return;Q.lock=true;
+  const ok=Q.cur.ok===b.dataset.o;
+  [...$("#qopts").children].forEach(x=>{x.disabled=true;if(x.dataset.o===Q.cur.ok)x.classList.add("right")});
+  if(!ok)b.classList.add("wrong");
+  beep(ok);
+  if(ok){Q.right++;Q.streak++;Q.best=Math.max(Q.best,Q.streak);const bonus=Q.streak>=5?5:0;addXP(10+bonus);Q.score+=Q.streak>=5?2:1}
+  else{Q.wrong++;Q.streak=0;
+    if(!Q.cfg.timed&&!Q.retried.has(Q.i)){Q.retried.add(Q.queue.length);Q.queue.push(Q.item)} // mistake comes back later
+  }
+  $("#qstreak").textContent="🔥 "+Q.streak;$("#qstreak").classList.toggle("hot",Q.streak>=3);
+  if(Q.cfg.timed){setTimeout(()=>{if(timer)renderQ()},ok?300:800);return}
+  speak(Q.cur.say);
+  showSheet(ok,Q.cur.full,ok?"":Q.cur.tip,Q.cur.say,()=>{hideSheet();Q.i++;if(Q.i>=Q.queue.length)finishQuiz();else renderQ()});
+};
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&$("#sheet").classList.contains("show")){e.preventDefault();$("#snext").click()}
+});
+function finishQuiz(){
+  const cfg=Q.cfg;
+  if(cfg.timed){
+    const s=Q.score,stars=s>=25?3:s>=15?2:s>=6?1:0;
+    endScreen(cfg.key,stars,s>=25?"Lightning fast!":s>=15?"Super quick!":"Good start!",[`⚡ ${s} points`,`✔ ${Q.right} right`,`🔥 best streak ${Q.best}`],()=>startQuiz(cfg));
+    return;
+  }
+  const total=Q.right+Q.wrong,acc=Math.round(Q.right/total*100);
+  const stars=acc>=90?3:acc>=70?2:1;
+  endScreen(cfg.key,stars,stars===3?"Amazing!":stars===2?"Well done!":"Keep going!",[`✔ ${acc}% right`,`🔥 best streak ${Q.best}`,`❌ ${Q.wrong} mistakes`],()=>startQuiz(cfg));
+}
+
+/* ===== GAMES ===== */
+const GAMES={
+  ay:{key:"ay",rule:true,keepOrder:true,items:AY,make:s=>{
+    const m=s.match(/\[(\w+)\]/),a=m[1];
+    const q=s.replace(/ ?\[\w+\]/,"");
+    const full=esc(s).replace(/\[(\w+)\]/,"<b>$1</b>");
+    return {html:`<div class="ask">Add <b>already</b> or <b>yet</b></div><div class="q">${esc(q)}</div>`,opts:["already","yet"],ok:a,
+      full,say:speakText(s.replace(/[\[\]]/g,"")),
+      tip:a==="yet"?"Negative or question → <b>yet</b> at the end.":"Positive sentence → <b>already</b> after have / has."};
+  }},
+  tf:{key:"tf",rule:true,keepOrder:true,items:Array.from({length:16},(_,i)=>i),make:()=>{
+    const it=LIST[Math.floor(Math.random()*LIST.length)],done=Math.random()<.5,pos=Math.random()<.5;
+    const st=pos?`Mia has already ${it.t.replace(/^\w+/,it.v)}.`:`Mia hasn't ${it.t.replace(/^\w+/,it.v)} yet.`;
+    const truth=pos===done;
+    const right=done?`Mia has <b>already</b> ${it.t.replace(/^\w+/,it.v)}.`:`Mia <b>hasn't</b> ${it.t.replace(/^\w+/,it.v)} <b>yet</b>.`;
+    return {html:`<div class="ask">Mia's list</div><div class="task"><span class="tb ${done?"on":"off"}">${done?"✓":"✗"}</span>${esc(it.t)}</div><div class="q">${esc(st)}</div>`,
+      opts:["True","False"],ok:truth?"True":"False",full:right,say:right.replace(/<\/?b>/g,""),
+      tip:done?"✓ = done → has already":"✗ = not done → hasn't … yet"};
+  }},
+  v3:{key:"v3",rule:false,cols:"three",items:V3S,make:x=>{
+    const full=esc(x.s).replace("___",`<b>${x.o[0]}</b>`);
+    return {html:`<div class="ask">Choose the right form</div><div class="q">${esc(x.s).replace("___",'<span class="gap"></span>')} <span class="verb">(${x.b})</span></div>`,
+      opts:x.o,ok:x.o[0],full,say:speakText(x.s.replace("___",x.o[0])),tip:`Present Perfect = have / has + <b>V3</b>: ${x.b} → ${x.o[0]}`};
+  }},
+  fm:{key:"fm",cols:"three",items:[...VERBS.map(v=>({v,f:"v2"})),...VERBS.map(v=>({v,f:"v3"}))],make:x=>formQ(x.v,x.f)},
+  bz:{key:"bz",cols:"three",timed:60,gen:()=>{const v=VERBS[Math.floor(Math.random()*VERBS.length)];return {v,f:Math.random()<.5?"v2":"v3"}},make:x=>formQ(x.v,x.f)}
+};
+const fake=b=>b.endsWith("e")?b+"d":b+"ed";
+function formQ(v,f){
+  const right=v[f][0],other=f==="v2"?"v3":"v2";
+  let cand=[fake(v.b),...v[other],v.b].filter(x=>!v[f].includes(x));
+  VERBS.forEach(o=>{if(o!==v)cand.push(o[f][0])});
+  const picks=[...new Set(cand)].slice(0,4);
+  const two=shuffle(picks.slice(0,3)).slice(0,2);
+  return {html:`<div class="ask">${f==="v2"?"Past simple (V2)":"Past participle (V3)"}</div><div class="q" style="font-size:44px;font-weight:900">${v.b}</div><div class="ask">${v.ru}</div>`,
+    opts:[right,...two],ok:right,full:`<b>${v.b} – ${v.v2.join(" / ")} – ${v.v3.join(" / ")}</b>`,say:sayAll(v),tip:""};
+}
+
+/* ===== CARDS ===== */
+let C={order:VERBS.slice(),i:0,flip:false};
+function drawCard(){
+  const v=C.order[C.i],f=$("#flash");
+  $("#ccount").textContent=`${C.i+1}/${C.order.length}`;$("#cprog").style.width=((C.i+1)/C.order.length*100)+"%";
+  if(!C.flip){
+    f.innerHTML=`<div class="big">${v.b}</div><div class="ru">${v.ru}</div><button class="play" data-say="${sayF(v,"b")}" aria-label="Listen">▶</button><div class="flip-hint">Say the forms, then tap the card</div>`;
+    speak(v.b);
+  }else{
+    const col=(l,t,s)=>`<div><small>${l}</small><b>${t}</b><button class="play" data-say="${s}" aria-label="Listen ${l}">▶</button></div>`;
+    f.innerHTML=`<div class="forms">${col("V1",v.b,sayF(v,"b"))}${col("V2",v.v2.join(" / "),sayF(v,"v2"))}${col("V3",v.v3.join(" / "),sayF(v,"v3"))}</div><div class="ru">${v.ru}</div>`;
+    speak(sayAll(v));
+  }
+}
+$("#flash").onclick=e=>{const p=e.target.closest("[data-say]");if(p){e.stopPropagation();speak(p.dataset.say);return}C.flip=!C.flip;drawCard()};
+$("#flash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();C.flip=!C.flip;drawCard()}};
+$("#cnext").onclick=()=>{C.i=(C.i+1)%C.order.length;C.flip=false;drawCard()};
+$("#cprev").onclick=()=>{C.i=(C.i-1+C.order.length)%C.order.length;C.flip=false;drawCard()};
+$("#cshuf").onclick=()=>{C.order=shuffle(VERBS);C.i=0;C.flip=false;drawCard()};
+
+/* ===== MEMORY ===== */
+let M=null;
+function startMem(){
+  const vs=shuffle(VERBS).slice(0,6);
+  const cards=shuffle(vs.flatMap((v,k)=>[{k,t:v.b,base:true,v},{k,t:`${v.v2.join("/")}<br>${v.v3.join("/")}`,base:false,v}]));
+  M={cards,open:[],done:0,moves:0,lock:false};
+  show("memory");drawMem();
+}
+function drawMem(){
+  $("#mem").innerHTML=M.cards.map((c,i)=>{
+    const st=c.matched?"face done":c.miss?"face miss":c.up?"face":"back";
+    return `<button class="chunky mc ${st}${c.base?" base":""}" data-i="${i}" aria-label="${c.up||c.matched?c.t.replace("<br>"," "):"hidden card"}">${c.up||c.matched?c.t:""}</button>`}).join("");
+  $("#mmoves").textContent=`Moves: ${M.moves}`;$("#mprog").style.width=(M.done/6*100)+"%";
+}
+$("#mem").onclick=e=>{
+  const b=e.target.closest(".mc");if(!b||M.lock)return;const c=M.cards[+b.dataset.i];
+  if(c.up||c.matched)return;
+  c.up=true;M.open.push(c);
+  if(c.base)speak(c.v.b);
+  if(M.open.length===2){
+    M.moves++;const[a,d]=M.open;
+    if(a.k===d.k){a.matched=d.matched=true;M.done++;M.open=[];beep(true);addXP(10);speak(sayAll(a.v));drawMem();
+      if(M.done===6)setTimeout(()=>{const s=M.moves<=9?3:M.moves<=13?2:1;endScreen("mem",s,s===3?"Super memory!":s===2?"Well done!":"Nice!",[`🧠 ${M.moves} moves`,`✔ 6 pairs`],startMem)},900);
+    }else{a.miss=d.miss=true;M.lock=true;beep(false);drawMem();
+      setTimeout(()=>{a.up=d.up=a.miss=d.miss=false;M.open=[];M.lock=false;drawMem()},1000);}
+    return;
+  }
+  drawMem();
+};
+
+/* ===== MENU ===== */
+document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>{
+  const g=b.dataset.game;
+  if(g==="cards"){show("cards");C.flip=false;drawCard()}
+  else if(g==="mem")startMem();
+  else startQuiz(GAMES[g]);
+});
+</script>
+</body>
+</html>
